@@ -7,11 +7,14 @@ export class StoreService {
   private tester = true;
   private state = new Subject<string>();
 
+  public titleToLink: object;
+
   retrieveLanguage$ = this.language.asObservable();
   retrieveState$ = this.state.asObservable();
 
   constructor() {
     this.language.next('en');
+    this.titleToLink = {};
   }
 
 
@@ -30,5 +33,6 @@ export class StoreService {
   getState() {
     return this.state.asObservable();
   }
+
 
 }

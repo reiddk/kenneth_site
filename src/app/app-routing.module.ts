@@ -9,22 +9,9 @@ import { NotesComponent } from './notes/notes.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: '**',
     component: HomeComponent
   },
-  {
-    path: 'about',
-    component: AboutComponent
-  },
-  {
-    path: 'publications',
-    component: PublicationsComponent
-  },
-  {
-    path: 'notes',
-    component: NotesComponent
-  },
-];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

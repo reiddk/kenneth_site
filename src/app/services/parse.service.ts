@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RequestService } from '../services/request.service';
+import { isNumeric } from 'rxjs/util/isNumeric';
 
 @Injectable()
 export class ParseService {
@@ -52,7 +53,7 @@ export class ParseService {
     }
   }
 
-  finishParsing(outObj: object, objArr: object[], index: number, callback): void {
+  finishParsing(outObj: object[], objArr: object[], index: number, callback): void {
   	if (objArr.length > index) {
   		//(submitUrl: string, callback = null
   		if (objArr[index]['type'] === 'text' || objArr[index]['type'] === 'pdfs' || objArr[index]['type'] === 'html' ) {
@@ -60,16 +61,16 @@ export class ParseService {
 	  		this.requestService.getWithCallback(objArr[index]['link'], 'text', function (output) {
 	  			
           if (objArr[index]['type'] === 'text') {
-            outObj[objArr[index]['name']] = objArr[index];
-            outObj[objArr[index]['name']]['link_output'] = output.split('\n');
+            objArr[index]['link_output'] = output.split('\n');
+            outObj.push(objArr[index]);
           } else if (objArr[index]['type'] === 'html') {
-            outObj[objArr[index]['name']] = objArr[index];
-            outObj[objArr[index]['name']]['link_output'] = output;
+            objArr[index]['link_output'] = output;
+            outObj.push(objArr[index]);
           } else if (objArr[index]['type'] === 'pdfs') {
             let pdfOut = self.parsePdfText(output);
             if (pdfOut) {
-              outObj[objArr[index]['name']] = objArr[index];
-              outObj[objArr[index]['name']]['link_output'] = pdfOut;
+              objArr[index]['link_output'] = pdfOut;
+              outObj.push(objArr[index]);
             }
             
           }
@@ -94,12 +95,14 @@ type is text, image, pdfs
   	let inputArray = input.split('\n');
   	for (let i = 0; i < inputArray.length; i++) {
   		let tempArr = inputArray[i].split(',');
-  		if (tempArr.length === 3 && typeof tempArr[0] === 'string' && typeof tempArr[1] === 'string' && typeof tempArr[2] === 'string') {
+  		if (tempArr.length === 3 && typeof tempArr[0] === 'string' && isNumeric(tempArr[0].trim()) && typeof tempArr[1] === 'string' && typeof tempArr[2] === 'string') {
   			let tempObj = {'name': tempArr[0].trim(), 'type': tempArr[1].trim(), 'link': tempArr[2].trim().replace(/www.dropbox.com/g, 'dl.dropboxusercontent.com')};
   			out.push(tempObj);
-  		}
+  		} else {
+        console.log('Line #'+i+' is not correctly set up. Use notation (number, type, link) ');
+      }
   	}
-  	this.finishParsing({}, out, 0, callback);
+  	this.finishParsing([], out, 0, callback);
   }
 
 }

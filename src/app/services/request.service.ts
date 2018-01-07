@@ -12,6 +12,8 @@ export class RequestService {
   }
 
   public get(source: string, typeOfResponse: any): Promise<any> {
+    console.log(source);
+    console.log(typeOfResponse);
     return this.http.get(source, {responseType: typeOfResponse}).toPromise();
   }
 

@@ -1,4 +1,4 @@
-  <div class="row">
+  <!--<div class="row">
     <div class="col-lg-12 text-center">
     	<img src="{{ image }}" style="height:100%;margin:auto;">
     	<app-interpret [lineSettings]="pageSettings?.home_page_image"></app-interpret>
@@ -15,5 +15,11 @@
   <div class="row" style="margin-top:50px;">
   	<div class="col-lg-12">
   		<app-interpret [lineSettings]="pageSettings?.home_temp_pdfs"></app-interpret>
+  	</div>
+  </div>-->
+
+  <div class = "container">
+  	<div class="row" style="margin-top:50px;" *ngFor="let section of pageSettings">
+  		<app-interpret [lineSettings]="section"></app-interpret>
   	</div>
   </div>
