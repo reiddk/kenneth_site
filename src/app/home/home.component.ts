@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   pageSettings = [];
   titleToLinkWatcher: Subscription;
+  hackyTempBool = true;
 
   constructor(private requestService: RequestService, 
   	private storeService: StoreService,
@@ -26,10 +27,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   updateView() {
     const self = this;
     self.pageSettings = [];
-    console.log(self.storeService.titleToLink);
-    if (self.storeService.titleToLink[self.router.url]) {
-      self.requestService.get(self.storeService.titleToLink[self.router.url], 'text')
+    let routerVar = self.router.url;
+    if (typeof routerVar !== 'string' || routerVar === '/' || routerVar === '') {
+      routerVar = '/home';
+    }
+    if (self.storeService.titleToLink[routerVar]) {
+      self.requestService.get(self.storeService.titleToLink[routerVar], 'text')
       .then((data) => {
+        self.hackyTempBool = true;
         self.parseService.parseFile(data, function (output) {
           self.pageSettings = output;
         });
@@ -49,12 +54,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
 
     self.router.events.subscribe((val) => {
-        if (val.constructor.name === "NavigationEnd") {
+      if (self.hackyTempBool) {
+        setTimeout(() => {
+          self.hackyTempBool = false;
           self.updateView();
-        }
+
+        }, 50);
+      }
+      
       });
-  	
-    
   }
 
   ngOnDestroy() {

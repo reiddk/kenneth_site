@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class InterpretComponent implements OnInit {
 	
-	@Input('lineSettings') lineSettings: object;
+	@Input('lineSettings') lineSettings: any;
 
   constructor() { }
 
