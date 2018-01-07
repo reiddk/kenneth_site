@@ -1,5 +1,19 @@
-      <div class="row" style="margin-top:50px;">
-        <div class="col-lg-12 text-center">
-        	<img src="{{pageSettings['home page image']}}" style="height:100%;margin:auto;">
-        </div>
-      </div>
+  <div class="row">
+    <div class="col-lg-12 text-center">
+    	<img src="{{ image }}" style="height:100%;margin:auto;">
+    	<app-interpret [lineSettings]="pageSettings?.home_page_image"></app-interpret>
+    </div>
+  </div>
+  <div class="row" style="margin-top:50px;">
+  	<app-interpret [lineSettings]="pageSettings?.home_explanation"></app-interpret>
+  </div>
+  <div class="row" style="margin-top:50px;">
+  	<div class="col-lg-12">
+  		<app-interpret [lineSettings]="pageSettings?.home_explanation_text"></app-interpret>
+  	</div>
+  </div>
+  <div class="row" style="margin-top:50px;">
+  	<div class="col-lg-12">
+  		<app-interpret [lineSettings]="pageSettings?.home_temp_pdfs"></app-interpret>
+  	</div>
+  </div>

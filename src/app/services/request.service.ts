@@ -11,7 +11,13 @@ export class RequestService {
     return this.http.post(source, {responseType: typeResponse}).toPromise();
   }
 
-  get(source: string, typeOfResponse: any): Promise<any> {
+  public get(source: string, typeOfResponse: any): Promise<any> {
     return this.http.get(source, {responseType: typeOfResponse}).toPromise();
+  }
+
+  public getWithCallback(submitUrl: string, typeOfResponse: any, callback = null): void {
+    this.http.get(submitUrl.replace(/www.dropbox.com/g, 'dl.dropboxusercontent.com'), {responseType: typeOfResponse}).subscribe(data => {
+      callback(data);
+    });
   }
 }

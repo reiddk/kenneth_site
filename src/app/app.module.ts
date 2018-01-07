@@ -11,11 +11,19 @@ import { StoreService } from './services/store.service';
 import { RequestService } from './services/request.service';
 import { ParseService } from './services/parse.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AboutComponent } from './about/about.component';
+import { PublicationsComponent } from './publications/publications.component';
+import { NotesComponent } from './notes/notes.component';
+import { InterpretComponent } from './interpret/interpret.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    AboutComponent,
+    PublicationsComponent,
+    NotesComponent,
+    InterpretComponent
   ],
   imports: [
     BrowserModule,
