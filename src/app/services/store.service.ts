@@ -6,11 +6,13 @@ export class StoreService {
   private language = new Subject<string>();
   private tester = true;
   private state = new Subject<string>();
+  private titlesToLink = new Subject<object>();
 
   public titleToLink: object;
 
   retrieveLanguage$ = this.language.asObservable();
   retrieveState$ = this.state.asObservable();
+  retrieveTitles$ = this.titlesToLink.asObservable();
 
   constructor() {
     this.language.next('en');
@@ -20,6 +22,11 @@ export class StoreService {
 
   passLanguage(data: string) {
     this.language.next(data);
+  }
+
+  passTitles(data: object) {
+    this.titleToLink = data;
+    this.titlesToLink.next(data);
   }
 
   getLanguage() {

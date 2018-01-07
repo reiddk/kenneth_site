@@ -9,7 +9,6 @@ export class ParseService {
 
   parsePdfLine(pdfText: string) {
     let tmpArr = pdfText.split(',');
-    console.log(tmpArr);
     let output = {};
     if (tmpArr.length > 1) {
       for (let i = 0; i < tmpArr.length; i++) {

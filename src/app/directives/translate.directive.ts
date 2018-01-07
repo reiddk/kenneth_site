@@ -94,7 +94,6 @@ export class TranslateDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
     const self = this;
-
     self.urlSub = self.storeService.retrieveLanguage$.subscribe(
       data => {
         self.language = data;

@@ -7,19 +7,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item" [ngClass]="{'active':router.url === '/'}">
-              <a class="nav-link" routerLink="/">Home
-                <span class="sr-only">(current)</span>
+            <li class="nav-item" *ngFor="let title of titles" [ngClass]="{'active':router.url === '/'+title}">
+              <a class="nav-link" [routerLink]="'/'+title">{{title}}
               </a>
-            </li>
-            <li class="nav-item" [ngClass]="{'active':router.url === '/about'}">
-              <a class="nav-link" routerLink="/about" >About</a>
-            </li>
-            <li class="nav-item" [ngClass]="{'active':router.url === '/publications'}">
-              <a class="nav-link" routerLink="/publications">Publications</a>
-            </li>
-            <li class="nav-item" [ngClass]="{'active':router.url === '/notes'}">
-              <a class="nav-link" routerLink="/notes">Lecture Notes and Books</a>
             </li>
           </ul>
         </div>
