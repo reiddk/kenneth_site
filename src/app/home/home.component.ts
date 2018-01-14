@@ -35,9 +35,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       self.requestService.get(self.storeService.titleToLink[routerVar], 'text')
       .then((data) => {
         self.hackyTempBool = true;
-        self.parseService.parseFile(data, function (output) {
-          self.pageSettings = output;
-        });
+        self.pageSettings = self.parseService.parseFile(data);
+        console.log(self.pageSettings);
       })
       .catch((e) => { 
         console.log('there was an error');

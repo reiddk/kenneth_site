@@ -8,7 +8,7 @@ export class ParseService {
   constructor(private requestService: RequestService) { }
 
   parsePdfLine(pdfText: string) {
-    let tmpArr = pdfText.split(',');
+    let tmpArr = pdfText.split('--');
     let output = {};
     if (tmpArr.length > 1) {
       for (let i = 0; i < tmpArr.length; i++) {
@@ -30,78 +30,77 @@ export class ParseService {
     }
   }
 
-  parsePdfText(pdfText: string) {
-    let tmpArr = pdfText.split('\n');
-    let output = [];
-    let aLineWorked = false;
-    if (tmpArr.length > 0) {
-      for (let i = 0; i < tmpArr.length; i++) {
-        let tmpOut = this.parsePdfLine(tmpArr[i]);
-        if (tmpOut) {
-          aLineWorked = true;
-          output.push(tmpOut);
+
+  stripTags (input: string) {
+    return input.replace(/\|(\<|\>)\|/g, "");
+  }
+
+  parseLine (input: string) {
+    let splitInput = input.match(/\|\<\|[^\|]*\|\>\|/g);
+    console.log(splitInput);
+    if (splitInput && splitInput.constructor === Array && splitInput.length > 1) {
+        let tempTitle = this.stripTags(splitInput[0]);
+        console.log(tempTitle);
+        if (tempTitle === 'image') {
+          return {'type': tempTitle, 'link': this.stripTags(splitInput[1]).replace(/www.dropbox.com/g, 'dl.dropboxusercontent.com')};
+        } else if (tempTitle === 'html') {
+          return {'type': tempTitle, 'link_output': this.stripTags(splitInput[1])};
+        } else if (tempTitle === 'text') {
+          return {'type': tempTitle, 'link_output': this.stripTags(splitInput[1]).split('\n')};
+        } else if (tempTitle === 'pdfs') {
+          let tempPdfOut = [];
+          console.log('asdf');
+          for (let i = 1; i < splitInput.length; i++) {
+            console.log('got here');
+            let tempPdfLine = this.parsePdfLine(this.stripTags(splitInput[i]));
+            if (tempPdfLine) {
+              tempPdfOut.push(tempPdfLine);
+            }
+          }
+          if (tempPdfOut.length > 0) {
+            return {'type': tempTitle, 'link_output': tempPdfOut};
+          } else {
+            return null;
+          }
+        } else {
+          return null
         }
-      }
-      if (!aLineWorked) {
-        return null;
-      } else {
-        return output;
-      }
+      
     } else {
       return null;
     }
   }
-
-  finishParsing(outObj: object[], objArr: object[], index: number, callback): void {
-  	if (objArr.length > index) {
-  		//(submitUrl: string, callback = null
-  		if (objArr[index]['type'] === 'text' || objArr[index]['type'] === 'pdfs' || objArr[index]['type'] === 'html' ) {
-  		let self = this;
-	  		this.requestService.getWithCallback(objArr[index]['link'], 'text', function (output) {
-	  			
-          if (objArr[index]['type'] === 'text') {
-            objArr[index]['link_output'] = output.split('\n');
-            outObj.push(objArr[index]);
-          } else if (objArr[index]['type'] === 'html') {
-            objArr[index]['link_output'] = output;
-            outObj.push(objArr[index]);
-          } else if (objArr[index]['type'] === 'pdfs') {
-            let pdfOut = self.parsePdfText(output);
-            if (pdfOut) {
-              objArr[index]['link_output'] = pdfOut;
-              outObj.push(objArr[index]);
-            }
-            
-          }
-	  			self.finishParsing(outObj, objArr, index+1, callback);
-  		});
-  		} else if ( objArr[index]['type'] === 'image') {
-  			outObj[objArr[index]['name']] = objArr[index];
-  			this.finishParsing(outObj, objArr, index+1, callback);
-  		} else {
-        this.finishParsing(outObj, objArr, index+1, callback);
-      }
-  		
-  	} else {
-  		 callback(outObj);
-  	}
-  }
 /*
 type is text, image, pdfs
 */
-  parseFile(input: string, callback): void {
-  	let out = [];
-  	let inputArray = input.split('\n');
-  	for (let i = 0; i < inputArray.length; i++) {
-  		let tempArr = inputArray[i].split(',');
-  		if (tempArr.length === 3 && typeof tempArr[0] === 'string' && isNumeric(tempArr[0].trim()) && typeof tempArr[1] === 'string' && typeof tempArr[2] === 'string') {
-  			let tempObj = {'name': tempArr[0].trim(), 'type': tempArr[1].trim(), 'link': tempArr[2].trim().replace(/www.dropbox.com/g, 'dl.dropboxusercontent.com')};
-  			out.push(tempObj);
-  		} else {
-        console.log('Line #'+i+' is not correctly set up. Use notation (number, type, link) ');
+  parseFile(input: string): any[] {
+    let out = [];
+    let inputArray = input.split("-----");
+    for (let i = 0; i < inputArray.length; i++) {
+      let tempObj = this.parseLine(inputArray[i]);
+      if (tempObj) {
+        out.push(tempObj);
       }
-  	}
-  	this.finishParsing([], out, 0, callback);
+    }
+    return out;
   }
 
 }
+
+
+/*
+  parseFile(input: string, callback): void {
+    let out = [];
+    let inputArray = input.split('\n');
+    for (let i = 0; i < inputArray.length; i++) {
+      let tempArr = inputArray[i].split(',');
+      if (tempArr.length === 3 && typeof tempArr[0] === 'string' && isNumeric(tempArr[0].trim()) && typeof tempArr[1] === 'string' && typeof tempArr[2] === 'string') {
+        let tempObj = {'name': tempArr[0].trim(), 'type': tempArr[1].trim(), 'link': tempArr[2].trim().replace(/www.dropbox.com/g, 'dl.dropboxusercontent.com')};
+        out.push(tempObj);
+      } else {
+        console.log('Line #'+i+' is not correctly set up. Use notation (number, type, link) ');
+      }
+    }
+    this.finishParsing([], out, 0, callback);
+  }
+*/
