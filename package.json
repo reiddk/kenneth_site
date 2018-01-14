@@ -25,10 +25,11 @@
     "mydatepicker": "^2.6.1",
     "ng-http-loader": "^0.6.0",
     "ng-recaptcha": "^3.0.2",
+    "ng2-pdf-viewer": "^3.0.8",
     "ngx-pipes": "^2.0.5",
     "rxjs": "^5.5.5",
+    "webpack": "^3.10.0",
     "zone.js": "^0.8.14"
-
   },
   "devDependencies": {
     "@angular-devkit/schematics": "0.0.42",

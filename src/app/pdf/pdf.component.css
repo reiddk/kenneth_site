@@ -1,0 +1,39 @@
+.pdf-wrapper{
+	position:fixed;
+	top:2%;
+	bottom:2%;
+	left: 50%;
+	transform: translateX(-50%);
+	width:95%;
+	z-index:100000;
+	background-color:white;
+	min-height:300px;
+	border-color:black;
+	border-style:solid;
+	border-width:1px;
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+.exitSpan{
+    float: right;
+    padding: 10px 10px 10px 10px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+}
+
+.exitSpan:hover {
+    -webkit-box-shadow: inset 2px 2px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 2px 2px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: inset 2px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+.pdfHolder {
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+.pdfHolderWrapper {
+	height:100%;
+}

@@ -1,0 +1,43 @@
+<div class="pdf-wrapper" *ngIf="isVisible"  id="pdfHolderId">
+	<span class="exitSpan" (click)="exitIt()">X</span>
+	<div class="container">
+		<div class="row" style="margin-top:40px;" id="firstOptions">
+		<div class="col-lg-2 col-md-3 col-sm-3">
+			<button (click)="incrementPage(-1)">Back</button>
+		</div>
+		
+		<div class="col-lg-2 col-md-3 col-sm-3">
+			<button (click)="incrementPage(1)">Next</button>
+		</div>
+		<div class="col-lg-2 col-md-3 col-sm-3">
+			<input type="number" [(ngModel)]="currPage" style="width:50%;">
+		</div>
+		<div class="col-lg-2 col-md-3 col-sm-3">
+			<a href="{{pdfInfo?.link}}">DOWNLOAD</a>
+		</div>
+		</div>
+		<div class="row" id="secondOptions">
+			<div class="col-lg-2 col-md-3 col-sm-3">
+				<button (click)="zoomPdf(-.1)">Smaller</button>
+			</div>
+			
+			<div class="col-lg-2 col-md-3 col-sm-3">
+				<button (click)="zoomPdf(.1)">Larger</button>
+			</div>
+		</div>
+		<div class="pdfHolderWrapper">
+		<div class="pdfHolder" [ngStyle]="{'height':pdfHeight}">
+				  <pdf-viewer [src]="pdfInfo?.link" 
+				              [render-text]="true"
+				              [show-all]="false"
+				              [page]="currPage"
+				              [fit-to-page]="true"
+				              [autoresize]="true"
+				              [original-size]="false"
+				              [zoom]="pdfSize"
+				              style="display: block;"
+				  ></pdf-viewer>
+				  </div>
+				  </div>
+	</div>
+</div>

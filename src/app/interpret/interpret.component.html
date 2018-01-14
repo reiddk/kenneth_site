@@ -10,43 +10,12 @@
 	</div>
 </div>
 <div *ngIf="lineSettings?.type === 'pdfs'">
-<style>
-	.pdf-link{
-		height:100%;
-		width:100%;
-		text-align:center;
-		display:block;
-		text-decoration:none;
-		color:black;
-	}
-	.pdf-div{
-		border-radius:10px;
-		border-style:solid;
-		border-width:1px;
-		border-color:grey;
-		background-color:#eae8e8;
-		height:100%;
-		text-align:center;
-		background-size:cover;
-	}
-	.pdf-div:hover {
-		opacity:.8;
-		-webkit-box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);
-		-moz-box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);
-		box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);
-	}
-	.pdf-name-wrapper {
-		margin-top:10px;
-		margin-bottom:10px;
-		border-top-style:solid;
-		border-top-color:grey;
-		border-top-width:1px;
-	}
-</style>
+
 <div class="container">
 <div class="row">
 
-	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 pdf-div" *ngFor="let pdf of lineSettings.link_output"><a href="{{pdf.pdf_link}}" class="pdf-link"><div><img src="{{pdf?.pdf_image}}" style="width:100%;"></div><div class="pdf-name-wrapper">{{pdf.name}}</div></a></div>
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 pdf-div" *ngFor="let pdf of lineSettings.link_output"><a (click)="showPdf(pdf.pdf_link, pdf.name, pdf?.pdf_image)" class="pdf-link"><div><img src="{{pdf?.pdf_image}}" style="width:100%;"></div><div class="pdf-name-wrapper">{{pdf.name}}
+	</div></a></div>
 </div>
 </div>
 </div>

@@ -16,6 +16,9 @@ import { PublicationsComponent } from './publications/publications.component';
 import { NotesComponent } from './notes/notes.component';
 import { InterpretComponent } from './interpret/interpret.component';
 
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfComponent } from './pdf/pdf.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,14 +26,16 @@ import { InterpretComponent } from './interpret/interpret.component';
     AboutComponent,
     PublicationsComponent,
     NotesComponent,
-    InterpretComponent
+    InterpretComponent,
+    PdfComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    PdfViewerModule
   ],
   providers: [RequestService, StoreService, WindowService, ParseService],
   bootstrap: [AppComponent]
