@@ -41,9 +41,4 @@ export class AppComponent implements OnInit {
     });
   }
 
-  testroute() {
-
-  	console.log(this.router.url);
-  }
-
 }

@@ -35,6 +35,7 @@
 				              [autoresize]="true"
 				              [original-size]="false"
 				              [zoom]="pdfSize"
+				              (error)="onError($event)"
 				              style="display: block;"
 				  ></pdf-viewer>
 				  </div>

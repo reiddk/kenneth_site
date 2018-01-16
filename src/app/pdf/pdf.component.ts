@@ -26,6 +26,7 @@ export class PdfComponent implements OnInit {
   	this.pdfInfoSub = this.storeService.retrievePdfToShow$.subscribe(
       data => {
       	self.isVisible = true;
+      	self.currPage = 1;
         self.pdfInfo = data;
       });
 
@@ -56,10 +57,9 @@ export class PdfComponent implements OnInit {
   	}
   }
 
-  getHeight() {
-
-  	return '100px';
-  }
+  onError(error: any) {
+  	console.log(error);
+	}
 
   ngOnDestroy() {
     this.pdfInfoSub.unsubscribe();
