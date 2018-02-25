@@ -15,6 +15,8 @@ export class PdfComponent implements OnInit {
   pdfInfo: object;
   currPage = 1;
   pdfSize = 1;
+  totalPages = 0;
+  showLoader = true;
 
   pdfHeight = '90hv';
 
@@ -42,6 +44,8 @@ export class PdfComponent implements OnInit {
   }
 
   exitIt() {
+    this.totalPages = 0;
+    this.showLoader = true;
   	this.isVisible = false;
   }
 
@@ -64,4 +68,9 @@ export class PdfComponent implements OnInit {
   ngOnDestroy() {
     this.pdfInfoSub.unsubscribe();
   }
+  callBackFn(pdf: any) {
+    this.showLoader = false;
+    this.totalPages = pdf.pdfInfo.numPages;
+   console.log(pdf);
+}
 }

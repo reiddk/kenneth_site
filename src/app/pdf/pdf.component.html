@@ -2,31 +2,33 @@
 	<span class="exitSpan" (click)="exitIt()">X</span>
 	<div class="container">
 		<div class="row" style="margin-top:40px;" id="firstOptions">
-		<div class="col-lg-2 col-md-3 col-sm-3">
+		<div class="col-sm-3 col-6">
 			<button (click)="incrementPage(-1)">Back</button>
 		</div>
 		
-		<div class="col-lg-2 col-md-3 col-sm-3">
+		<div class="col-sm-3 col-6">
 			<button (click)="incrementPage(1)">Next</button>
 		</div>
-		<div class="col-lg-2 col-md-3 col-sm-3">
+		<div class="col-sm-3 col-6">
 			<input type="number" [(ngModel)]="currPage" style="width:50%;">
+			<span *ngIf="totalPages">of {{ totalPages }}</span>
 		</div>
-		<div class="col-lg-2 col-md-3 col-sm-3">
+		<div class="col-sm-3 col-6">
 			<a href="{{pdfInfo?.link}}">DOWNLOAD</a>
 		</div>
 		</div>
 		<div class="row" id="secondOptions">
-			<div class="col-lg-2 col-md-3 col-sm-3">
+			<div class="col-sm-3 col-6">
 				<button (click)="zoomPdf(-.1)">Smaller</button>
 			</div>
 			
-			<div class="col-lg-2 col-md-3 col-sm-3">
+			<div class="col-sm-3 col-6">
 				<button (click)="zoomPdf(.1)">Larger</button>
 			</div>
 		</div>
 		<div class="pdfHolderWrapper">
 		<div class="pdfHolder" [ngStyle]="{'height':pdfHeight}">
+		<img *ngIf="showLoader" src="/assets/images/Loading_icon.gif" style="width: 30%;margin-left: 35%;margin-top: 200px;">
 				  <pdf-viewer [src]="pdfInfo?.link" 
 				              [render-text]="true"
 				              [show-all]="false"
@@ -36,6 +38,7 @@
 				              [original-size]="false"
 				              [zoom]="pdfSize"
 				              (error)="onError($event)"
+				              (after-load-complete)="callBackFn($event)"
 				              style="display: block;"
 				  ></pdf-viewer>
 				  </div>
