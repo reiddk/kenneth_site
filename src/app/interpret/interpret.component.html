@@ -14,7 +14,7 @@
 <div class="container">
 <div class="row">
 
-	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 pdf-div" *ngFor="let pdf of lineSettings.link_output"><a (click)="showPdf(pdf.pdf_link, pdf.name, pdf?.pdf_image)" class="pdf-link"><div><img src="{{pdf?.pdf_image}}" style="width:100%;"></div><h2 class="pdf-name-wrapper">{{pdf.name}}
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 pdf-div" *ngFor="let pdf of lineSettings.link_output"><a [routerLink]="['/book/' + pdf.name]" class="pdf-link"><div><img src="{{pdf?.pdf_image}}" style="width:100%;"></div><h2 class="pdf-name-wrapper">{{pdf.name}}
 	</h2></a></div>
 </div>
 </div>
