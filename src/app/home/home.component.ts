@@ -54,7 +54,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .then((data) => {
         self.hackyTempBool = true;
         self.pageSettings = self.parseService.parseFile(data);
-        console.log(self.pageSettings);
         if (routerVar.indexOf('book') > -1) {
           let name = routerVar.split('/')[2];
           this.getPDFS(name);

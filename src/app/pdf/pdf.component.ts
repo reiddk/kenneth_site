@@ -49,6 +49,15 @@ export class PdfComponent implements OnInit {
   	this.isVisible = false;
   }
 
+  sendDownloadEvent(name) {
+    console.log(name);
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'bookDownload',
+      eventLabel: name,
+      eventAction: name
+    });
+  }
+
   incrementPage(howMuch: number) {
   	this.currPage += howMuch;
   	

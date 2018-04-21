@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { StoreService } from './services/store.service';
 import { RequestService } from './services/request.service';
 
@@ -13,7 +13,15 @@ export class AppComponent implements OnInit {
 
   constructor(public router: Router,
     private storeService: StoreService,
-    private requestService: RequestService) {}
+    private requestService: RequestService) {
+     this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        console.log('got here1');
+        (<any>window).ga('set', 'page', event.urlAfterRedirects);
+        (<any>window).ga('send', 'pageview');
+      }
+    });
+  }
 
   parseIndexLine(input: string): void {
     let tmpArr = input.split(',');

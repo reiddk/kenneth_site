@@ -14,7 +14,7 @@
 			<span *ngIf="totalPages">of {{ totalPages }}</span>
 		</div>
 		<div class="col-sm-3 col-6">
-			<a href="{{pdfInfo?.link}}">DOWNLOAD</a>
+			<a href="{{pdfInfo?.link}}" (click)='sendDownloadEvent(pdfInfo.name)'>DOWNLOAD</a>
 		</div>
 		</div>
 		<div class="row" id="secondOptions">
