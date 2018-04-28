@@ -16,7 +16,6 @@ export class AppComponent implements OnInit {
     private requestService: RequestService) {
      this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log('got here1');
         (<any>window).ga('set', 'page', event.urlAfterRedirects);
         (<any>window).ga('send', 'pageview');
       }
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     let self = this;
-    this.requestService.getWithCallback('https://www.dropbox.com/s/oubtm1mjjrzm2ll/info.txt?dl=0', 'text', function(output) {
+    this.requestService.getWithCallback('https://www.dropbox.com/s/6ix4e6wc2imvadk/info.txt?dl=0', 'text', function(output) {
       self.parseIndex(output);
     });
   }
